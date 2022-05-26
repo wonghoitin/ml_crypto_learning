@@ -56,7 +56,6 @@ def get_order(x0, y0, a, b, p):
         n += 1
         p_value = calculate_p_q(temp_x, temp_y, x0, y0, a, p)
         if p_value[0] == x1 and p_value[1] == y1:
-            print("order: ".format(n+1))
             return n+1
         temp_x = p_value[0]
         temp_y = p_value[1]
@@ -124,11 +123,12 @@ def ecc_init(a, b, p, private):
         points = point_list(a, b, p)
         g = random.choice(points)
         q = calculate_np(g[0], g[1], private, a, p)
+        order = get_order(g[0], g[1], a, b, p)
         print(
-            "public_key: a = {}, b = {}, p = {}, G({}, {}), Q({}, {}) ".format(
-                a, b, p, g[0], g[1], q[0], q[1])
+            "public_key: a = {}, b = {}, p = {}, G({}, {}), Q({}, {}), order = {}".format(
+                a, b, p, g[0], g[1], q[0], q[1], order)
         )
-        return a, b, p, g[0], g[1], q[0], q[1], private
+        return a, b, p, g[0], g[1], q[0], q[1], order, private
 
 def ecc_encrypt(a, p, G_x, G_y, Q_x, Q_y, integer, message):
     k_G = calculate_np(G_x, G_y, integer, a, p)
