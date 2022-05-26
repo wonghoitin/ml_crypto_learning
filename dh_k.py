@@ -79,7 +79,7 @@ def dh_init(range1, range2, s = 0, kind = "small"):
         return r, p
 
 def client_a_1(range1, range2, XA, kind = "small"):
-    a, p = dh_init(10**3, 10**4, kind = "small")
+    a, p = dh_init(range1, range2)
     YA = cal_mod(a, XA, p)
     print("Now send public_key_a = {}, primitive_root = {} and prime_number = {} to client_b".format(YA, a, p))
     return YA, a, p
