@@ -104,7 +104,7 @@ def draw_graph(a, b, p):
     print()
     
 def point_list(a, b, p):
-    return [(x, y) for x in range(p) for y in range(p) if (y*y - (x*x*x + a*x + b)) % p == 0]
+    return [(x, y) for x in range(p) for y in range(p) if (y**2 - (x**3 + a*x + b)) % p == 0]
 
 def calculate_np(G_x, G_y, private_key, a, p):
     temp_x = G_x
