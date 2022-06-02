@@ -2,7 +2,8 @@
 # coding: utf-8
 
 # In[1]:
-
+#This is modified from Peter Harrington's simplified smo algorithm for svm. 
+#It's slower than Platt's version, but easier to implement and understand.
 
 import pandas
 import random
