@@ -31,7 +31,7 @@ def clipAlpha(aj, H, L):
         aj = L
     return aj
 
-def smo_simple_core(x, y, C, toler, maxiter):
+def smo_simple_core(x, y, C = 1, toler = 0.00001, maxiter = 30):
     mat_x = numpy.mat(x)
     mat_y = numpy.mat(y).transpose()
     b = 0
@@ -128,3 +128,8 @@ def smo_simple(x, y, C, toler, maxiter):
     w = cal_w(alphas, x, y)
     return b, alphas, w 
 
+def evaluation(pred_y, y):
+    acc = svm_accuracy(pred_y, y)
+    print("accuracy: {}\n\nconfusion matrix:".format(acc))
+    tn, fn, fp, tp = svm_confusion_mat(pred_y, y)
+    return acc, tn, fn, fp, tp
