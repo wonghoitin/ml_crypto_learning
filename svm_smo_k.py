@@ -19,11 +19,6 @@ import sklearn.datasets
 
 
 class smo_svm():
-    
-    def __init__(self, b, alphas):
-        self.b = b
-        self.alphas = alphas
-        self.w = w
 
     def selectJrand(i, m):
         j = i
