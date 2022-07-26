@@ -13,10 +13,6 @@ import numpy
 
 class cv_pic():
 
-    def __init__(self, in_path, out_path):
-        self.in_path = in_path
-        self.out_path = out_path
-
     def pic_in(in_path, out_path):
         target = cv.imread(in_path)
         target.tofile(out_path)
