@@ -6,11 +6,6 @@
 
 class cn_pow():
 
-    def __init__(self, a, b, pq):
-        self.a = a
-        self.b = b
-        self.pq = pq
-
     def exgcd(a,b):
         if b == 0:
             return 1,0,a
