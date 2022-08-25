@@ -14,7 +14,8 @@ import numpy
 def pic_in(in_path, out_path):
     target = cv.imread(in_path)
     target.tofile(out_path)
-    return target.shape, target
+    target_shape = target.shape
+    return target_shape, target
 
 def pic_out(in_path, win, shape):
     data_out = numpy.fromfile(in_path, dtype = numpy.uint8)
