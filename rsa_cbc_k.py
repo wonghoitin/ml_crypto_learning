@@ -193,4 +193,3 @@ def rsa_cbc_decrypt(c_list, rsa_private_bit, iv):
                            , c_list[(i-1)*len(sk):i*len(sk)], len(sk)))
     ans = [a for b in ans for a in b]
     return ans
-
