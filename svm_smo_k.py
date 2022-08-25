@@ -105,13 +105,14 @@ class smo_svm():
         return w
 
     def svm_pred_y(self, x): 
-        pred_y = []
+        if type(x) != list:
+            x = list(x)
         for i in range(len(numpy.mat(x))):
             if (numpy.mat(x)[i]*numpy.mat(self.w) + self.b).sum() > 0:
-                pred_y.append(1)
+                smo.pred_y.append(1)
             else:
-                pred_y.append(0)
-        return pred_y
+                smo.pred_y.append(0)
+        return smo.pred_y
 
     def svm_accuracy(self, y):
         if type(y) != list:
@@ -141,9 +142,9 @@ class smo_svm():
     def smo_simple(self, x, y):
         if 0 in y:
             y = y.map({0 : -1, 1 : 1})
-        b, alphas = self.smo_simple_core(x, y)
-        w = self.cal_w(alphas, x, y)
-        return b, alphas, w 
+        smo.b, smo.alphas = self.smo_simple_core(x, y)
+        smo.w = self.cal_w(smo.alphas, x, y)
+        return smo.b, smo.alphas, smo.w
 
     def evaluation(self, y):
         if type(y) != list:
