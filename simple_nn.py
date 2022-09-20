@@ -175,28 +175,3 @@ count_test = np.sum(np.argmax(output_layer.y,
                              axis = 1) == np.argmax(test_y, axis = 1))
 print("Training data set accuracy: " + str(count_train/len(train_x)*100) + "%")
 print("Test data set accuracy: " + str(count_test/len(test_x)*100) + "%")
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
