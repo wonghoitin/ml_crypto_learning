@@ -1,0 +1,83 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
+import warnings
+warnings.filterwarnings("ignore")
+
+
+# In[2]:
+
+
+import tensorflow as tf
+import argparse
+import numpy as np
+from tensorflow.examples.tutorials.mnist import input_data
+
+
+# In[3]:
+
+
+inputs, hiddens, outputs = 784, 200, 10
+learning_rate = 0.01
+epochs = 50
+batch_size = 64
+
+mnist = input_data.read_data_sets("./mnist/", one_hot = True)
+x = tf.placeholder(tf.float32, [None, inputs])
+y = tf.placeholder(tf.float32, [None, outputs])
+
+
+# In[4]:
+
+
+def mlp(x, hidden_weights, output_weights):
+    hidden_outputs = tf.nn.sigmoid(tf.matmul(x, hidden_weights))
+    final_outputs = tf.nn.sigmoid(tf.matmul(hidden_outputs, output_weights))
+    return final_outputs
+
+def train():
+    hidden_weights = tf.Variable(tf.random_normal([inputs, hiddens]),
+                                name = "hidden_weights")
+    output_weights = tf.Variable(tf.random_normal([hiddens, outputs]),
+                                name = "output_weights")
+    final_outputs = mlp(x, hidden_weights, output_weights)
+    errors = tf.reduce_mean(tf.squared_difference(final_outputs, y))
+    optimiser = tf.train.AdamOptimizer(learning_rate = learning_rate).minimize(errors)
+    init_op = tf.global_variables_initializer()
+    saver = tf.train.Saver()
+    with tf.Session() as sess:
+        sess.run(init_op)
+        total_batch = int(len(mnist.train.labels) / batch_size)
+        for epoch in range(epochs):
+            avg_error = 0
+            for i in range(total_batch):
+                batch_x, batch_y = mnist.train.next_batch(batch_size = batch_size)
+                _, c = sess.run([optimiser, errors], feed_dict = {x: batch_x, y: batch_y})
+                avg_error += c/total_batch
+            print("Epoch [{}/{}], error: {}".format(epoch+1, epochs, avg_error))
+        print("\nTraining complete!")
+        saver.save(sess, "./model")
+        
+def predict():
+    saver = tf.train.import_meta_graph("./model.meta")
+    with tf.Session() as sess:
+        saver.restore(sess, tf.train.latest_checkpoint("./"))
+        graph = tf.get_default_graph()
+        hidden_weights = graph.get_tensor_by_name("hidden_weights:0")
+        output_weights = grapg.get_tensor_by_name("output_weights:0")
+        final_outputs = mlp(x, hidden_weights, output_weights)
+        correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(final_outputs, 1))
+        accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+        tf.summary.scalar("accuracy", accuracy)
+        print(sess.run(accuracy, fead_dict = {x: mnist.test.images, y:
+                                             mnist.test.labels}))
+
+
+# In[5]:
+
+
+train()
+
