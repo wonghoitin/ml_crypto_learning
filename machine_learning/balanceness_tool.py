@@ -3,7 +3,8 @@
 
 # In[2]:
 
-
+#sklearn 0.19.2, imblearn 0.3.0
+#please check the version of imblearn installed and mind the changes in api
 import warnings
 warnings.filterwarnings("ignore")
 
