@@ -53,7 +53,7 @@ def is_primitive_root(r, p, s):
 def cal_mod(a, x, p):
     return pow(a, x, p)
 
-def dh_init(range1, range2, s = 0, kind = "small"):
+def dh_init(range1, range2, s = 32, kind = "small"):
     if kind == "small":
         while True:
             p = random.randint(range1, range2)
@@ -78,8 +78,8 @@ def dh_init(range1, range2, s = 0, kind = "small"):
         print("The primitive root is {} \nand the prime number is {}".format(r,p))
         return r, p
 
-def client_a_1(range1, range2, XA, kind = "small"):
-    a, p = dh_init(range1, range2)
+def client_a_1(range1, range2, XA, kind = "small", s = 32):
+    a, p = dh_init(range1, range2, kind = kind, s = s)
     YA = cal_mod(a, XA, p)
     print("Now send public_key_a = {}, primitive_root = {} and prime_number = {} to client_b".format(YA, a, p))
     return YA, a, p
