@@ -69,19 +69,26 @@ class smo_svm():
                         H = min(self.C, alphas[j] + alphas[_])
                     if L == H:
                         continue
+                    
+                    #obtain eta from the derivative of the object function
                     eta = 2 * mat_x[_, :]* mat_x[j, :].T 
                     - mat_x[_, :]* mat_x[_, :].T - mat_x[j, :]* mat_x[j, :].T
                     if eta >= 0:
                         continue
+                    
+                    #use eta to adjust alphaj in order to maximize the object function 
                     alphas[j] -= mat_y[j]* (E_ - Ej)/ eta
                     alphas[j] = self.clipAlpha(alphas[j], H, L)
                     if (abs(alphas[j] - alphaJold) < self.toler):
                         continue
+                    
+                    #use eta to adjust alpha_ in order to maximize the object function 
                     alphas[_] += mat_y[j] * mat_y[_] * (alphaJold - alphas[j])
                     b1 = b - E_ - mat_y[_] * (alphas[_] - alpha_old) * mat_x[_, :] *mat_x[_, :].T 
                     - mat_y[j] * (alphas[j] - alphaJold) * mat_x[_, :] * mat_x[j, :].T
                     b2 = b - Ej - mat_y[_] * (alphas[_] - alpha_old) * mat_x[_, :] *mat_x[j, :].T
                     - mat_y[j] * (alphas[j] - alpha_old) * mat_x[j, :] * mat_x[j, :].T
+                    
                     if (0 < alphas[_]) and (self.C > alphas[_]):
                         b = b1
                     elif (0 < alphas[j]) and (self.C > alphas[j]):
