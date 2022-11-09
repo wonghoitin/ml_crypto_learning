@@ -18,6 +18,7 @@ def get_inv(a, b):
         print("No inverse facotr")
         return None
 
+#cn_pow(10, 13, (11, 7)) is equivalent to pow(10, 13, 77), but faster
 def cn_pow(a, b, pq):
     euler = [pq[0] - 1, pq[1] - 1]
     temp = [0, 0]
