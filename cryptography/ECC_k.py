@@ -21,6 +21,7 @@ def gcd_x_y(x, y):
         return x
     else:
         return gcd_x_y(y, x% y)
+    
 def calculate_p_q(x1, y1, x2, y2, a, p):
     flag = 1
     if x1 == x2 and y1 == y2:
@@ -115,6 +116,7 @@ def calculate_np(G_x, G_y, private_key, a, p):
         private_key -= 1
     return p_value
 
+#pick integers a, b, prime number p and private key
 def ecc_init(a, b, p, private):
     if (4 * (a ** 3) + 27 * (b ** 2)) % p ==0:
         print("please input again")
@@ -130,6 +132,7 @@ def ecc_init(a, b, p, private):
         )
         return a, b, p, g[0], g[1], q[0], q[1], order, private
 
+#pick an integer, then use a, p, G, Q in public key to encrypt the message
 def ecc_encrypt(a, p, G_x, G_y, Q_x, Q_y, integer, message):
     k_G = calculate_np(G_x, G_y, integer, a, p)
     k_Q = calculate_np(Q_x, Q_y, integer, a, p)
