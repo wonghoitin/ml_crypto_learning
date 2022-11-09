@@ -126,16 +126,16 @@ def convert_rsa_to_bit(rsa_private, rsa_public, length):
     rsa_public_bit = tuple([convert_to_bit(i, length) for i in rsa_public])
     return rsa_private_bit, rsa_public_bit
 
-def run_back(m):
-    longbit = str(m[0])
-    for i in range(len(m)-1):
-        longbit = longbit + str(m[i+1])
+def run_back(_):
+    longbit = str(_[0])
+    for i in range(len(_)-1):
+        longbit = longbit + str(_[i+1])
     return int(longbit, 2)
 
-def full_run_back(full_m, pad):
+def full_run_back(m, pad):
     result = []
-    for i in range(int(len(full_m)/pad)):
-        result.append(run_back(full_m[i*pad:(i+1)*pad]))
+    for i in range(int(len(m)/pad)):
+        result.append(run_back(m[i*pad:(i+1)*pad]))
     return result
 
 def get_xor(c1,c2, total_pad):
