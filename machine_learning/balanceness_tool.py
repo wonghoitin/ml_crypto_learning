@@ -30,20 +30,23 @@ class instance():
 
 class balanceness():
     
-    def __init__(self, task):
-        #task is a list of dict
-        self.task = task
+    def __init__(self, params):
+        #tasks is a list of dict
+        self.tasks = params[0]
+        self.interval = params[1]
     
     def fit(self, instance):
         need_process = False
         trk = []
-        for i in self.task:
+        floor = self.interval["floor"]
+        ceiling = self.interval["ceiling"]
+        for i in self.tasks:
             balance = self.balance_task(method = i["method"], 
                                   ratio = i["ratio"],
                                   k = i["k"],
                                   target = i["target"],
-                                  floor = i["floor"],
-                                  ceiling = i["ceiling"])
+                                  floor = floor,
+                                  ceiling = ceiling)
             trk.append((i["target"], i["ratio"], i["k"]))
             balance.fit(instance)
         
@@ -70,7 +73,7 @@ class balanceness():
                     from imblearn.over_sampling import SMOTE
                     smo = SMOTE(ratio = {
                         i[0]: int(length*ideal)
-                    }, k_neighbors = i[2])
+                    }, k_neighbors = i[2], n_jobs = -1)
                     instance.features, instance.label = smo.fit_sample(instance.features, instance.label)
                     need_process = True
                     
@@ -109,7 +112,7 @@ class balanceness():
             from imblearn.over_sampling import SMOTE
             smo = SMOTE(ratio = {
                 self.target: int(sum(instance.label != self.target)/(1-self.ratio) * self.ratio)
-            }, k_neighbors = self.k)
+            }, k_neighbors = self.k, n_jobs = -1)
             instance.features, instance.label = smo.fit_sample(instance.features, instance.label)
 
         def under_sampling(self, instance):
