@@ -70,13 +70,13 @@ class smo_svm():
                     if L == H:
                         continue
                     
-                    #obtain eta from the derivative of the object function
+                    #obtain eta from the derivative of the objective function
                     eta = 2 * mat_x[_, :]* mat_x[j, :].T 
                     - mat_x[_, :]* mat_x[_, :].T - mat_x[j, :]* mat_x[j, :].T
                     if eta >= 0:
                         continue
                     
-                    #use eta to adjust alphaj in order to maximize the object function 
+                    #use eta to adjust alphaj in order to maximize the objective function 
                     alphas[j] -= mat_y[j]* (E_ - Ej)/ eta
                     alphas[j] = self.clipAlpha(alphas[j], H, L)
                     if (abs(alphas[j] - alphaJold) < self.toler):
