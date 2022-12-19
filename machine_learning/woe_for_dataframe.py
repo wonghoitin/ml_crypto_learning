@@ -2,8 +2,7 @@
 # coding: utf-8
 
 # In[1]:
-
-
+#O(len(columns) * len(data[column for column in columns].unique()) * len(data))  
 def woe(data):
     import math
     large1, large0 = sum(data[data.columns[-1]]), sum(data[data.columns[-1]] == False)
